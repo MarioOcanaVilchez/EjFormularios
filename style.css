@@ -1,0 +1,703 @@
+
+/* ==========================================
+   CALCULADORA HIPOTECARIA
+   Diseño moderno, responsive y limpio
+   ========================================== */
+
+:root {
+    --primary: #ff2a4b;
+    --primary-dark: #e51f3e;
+    --primary-light: #fff0f3;
+
+    --background: #f5f7fb;
+    --surface: #ffffff;
+
+    --text: #202638;
+    --text-light: #687086;
+
+    --border: #e1e5ee;
+    --success: #16845b;
+    --success-light: #e8f8f0;
+
+    --shadow-small: 0 4px 14px rgba(32, 38, 56, 0.06);
+    --shadow-medium: 0 12px 35px rgba(32, 38, 56, 0.10);
+
+    --radius-small: 10px;
+    --radius-medium: 16px;
+    --radius-large: 22px;
+}
+
+/* ---------- REINICIO GENERAL ---------- */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    min-height: 100%;
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    padding: 40px 20px;
+
+    font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text);
+
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(255, 42, 75, 0.07),
+            transparent 32%
+        ),
+        var(--background);
+}
+
+/* ---------- TÍTULOS ---------- */
+
+h1,
+h2,
+h3 {
+    color: var(--text);
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+}
+
+h1 {
+    margin: 0 0 12px;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: 800;
+    letter-spacing: -1.2px;
+}
+
+h2 {
+    margin: 0 0 20px;
+    font-size: clamp(1.2rem, 3vw, 1.6rem);
+    font-weight: 750;
+    letter-spacing: -0.4px;
+}
+
+p {
+    color: var(--text-light);
+    overflow-wrap: anywhere;
+}
+
+/* ==========================================
+   FORMULARIO
+   ========================================== */
+
+form {
+    width: 100%;
+    max-width: 620px;
+    margin: 30px auto;
+    padding: clamp(22px, 5vw, 38px);
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    background: var(--surface);
+    border: 1px solid rgba(225, 229, 238, 0.9);
+    border-radius: var(--radius-large);
+    box-shadow: var(--shadow-medium);
+}
+
+/* ---------- ETIQUETAS ANTES DE LOS INPUTS ---------- */
+
+/*
+   Los párrafos que preceden a los campos numéricos
+   se convierten en etiquetas visuales.
+*/
+
+form p {
+    margin: 8px 0 0;
+    color: #424a5e;
+    font-size: 0.93rem;
+    font-weight: 650;
+    line-height: 1.4;
+}
+
+/* Evita demasiado espacio antes del primer elemento */
+
+form > p:first-child {
+    margin-top: 0;
+}
+
+/* ---------- CAMPOS DE ENTRADA ---------- */
+
+form input[type="number"],
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form input[type="tel"] {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    min-height: 54px;
+    margin: 0 0 8px;
+    padding: 14px 16px;
+
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--text);
+
+    background: #fbfcff;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-small);
+
+    outline: none;
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+form input::placeholder {
+    color: #9299aa;
+    opacity: 1;
+}
+
+form input[type="number"]:hover,
+form input[type="text"]:hover,
+form input[type="email"]:hover,
+form input[type="password"]:hover,
+form input[type="tel"]:hover {
+    border-color: #c3cad9;
+    background: #ffffff;
+}
+
+form input[type="number"]:focus,
+form input[type="text"]:focus,
+form input[type="email"]:focus,
+form input[type="password"]:focus,
+form input[type="tel"]:focus {
+    background: #ffffff;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(255, 42, 75, 0.11);
+}
+
+/* ==========================================
+   INTERÉS FIJO / VARIABLE
+   ========================================== */
+
+/*
+   Los radios se colocan en una fila de dos opciones.
+   El HTML original puede mantener esta estructura:
+   radio fijo + párrafo "Fijo" + radio variable
+   + párrafo "Variable".
+*/
+
+form:has(input[type="radio"]) {
+    display: grid;
+    grid-template-columns: 22px minmax(0, 1fr) 22px minmax(0, 1fr);
+    align-items: center;
+    column-gap: 10px;
+    row-gap: 12px;
+}
+
+/* Los párrafos de etiqueta de los campos ocupan toda la fila */
+
+form:has(input[type="radio"]) > p:not(
+    input[type="radio"] + p
+) {
+    grid-column: 1 / -1;
+}
+
+/* Campos normales y botón: anchura completa */
+
+form:has(input[type="radio"]) input[type="number"],
+form:has(input[type="radio"]) input[type="text"],
+form:has(input[type="radio"]) input[type="email"],
+form:has(input[type="radio"]) input[type="password"],
+form:has(input[type="radio"]) input[type="tel"],
+form:has(input[type="radio"]) input[type="submit"] {
+    grid-column: 1 / -1;
+}
+
+/* Controles circulares */
+
+form input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+
+    display: inline-grid;
+    place-items: center;
+
+    width: 21px;
+    height: 21px;
+    min-width: 21px;
+    margin: 0;
+    padding: 0;
+
+    background: #ffffff;
+    border: 2px solid #c9cfdd;
+    border-radius: 50%;
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+form input[type="radio"]::before {
+    content: "";
+    width: 9px;
+    height: 9px;
+
+    background: #ffffff;
+    border-radius: 50%;
+    transform: scale(0);
+
+    transition: transform 0.18s ease;
+}
+
+form input[type="radio"]:checked {
+    background: var(--primary);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(255, 42, 75, 0.12);
+}
+
+form input[type="radio"]:checked::before {
+    transform: scale(1);
+}
+
+form input[type="radio"]:hover {
+    border-color: var(--primary);
+}
+
+form input[type="radio"]:focus-visible {
+    outline: 3px solid rgba(255, 42, 75, 0.25);
+    outline-offset: 3px;
+}
+
+/* Etiquetas de fijo y variable */
+
+form input[type="radio"] + p {
+    display: flex;
+    align-items: center;
+
+    min-width: 0;
+    min-height: 46px;
+    margin: 0;
+    padding: 10px 12px;
+
+    color: var(--text);
+    font-size: 0.94rem;
+    font-weight: 650;
+
+    background: #f7f8fc;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-small);
+
+    cursor: pointer;
+    transition:
+        color 0.2s ease,
+        background-color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+form input[type="radio"]:checked + p {
+    color: var(--primary-dark);
+    background: var(--primary-light);
+    border-color: rgba(255, 42, 75, 0.45);
+}
+
+/* ==========================================
+   BOTONES
+   ========================================== */
+
+form input[type="submit"],
+button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    min-height: 54px;
+    margin-top: 8px;
+    padding: 14px 22px;
+
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 750;
+    line-height: 1.3;
+    text-align: center;
+    text-decoration: none;
+
+    color: #ffffff;
+    background: linear-gradient(
+        135deg,
+        var(--primary),
+        var(--primary-dark)
+    );
+
+    border: none;
+    border-radius: var(--radius-small);
+    box-shadow: 0 7px 18px rgba(255, 42, 75, 0.22);
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        filter 0.2s ease;
+}
+
+form input[type="submit"]:hover,
+button:hover {
+    filter: brightness(1.03);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(255, 42, 75, 0.30);
+}
+
+form input[type="submit"]:active,
+button:active {
+    transform: translateY(0);
+}
+
+form input[type="submit"]:focus-visible,
+button:focus-visible {
+    outline: 3px solid rgba(255, 42, 75, 0.30);
+    outline-offset: 4px;
+}
+
+/* ==========================================
+   RESULTADOS DE LA HIPOTECA
+   ========================================== */
+
+#caracteristicasHipoteca,
+#caracteristicasMonetarias,
+#recomendacion {
+    width: 100%;
+    max-width: 850px;
+    margin: 22px auto;
+    padding: clamp(22px, 4vw, 32px);
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-large);
+    box-shadow: var(--shadow-small);
+
+    animation: aparecer 0.45s ease both;
+}
+
+/* Tarjeta principal */
+
+#caracteristicasHipoteca {
+    border-top: 5px solid var(--primary);
+}
+
+/* Datos monetarios */
+
+#caracteristicasMonetarias {
+    border-top: 5px solid #6675e8;
+    animation-delay: 0.08s;
+}
+
+/* Recomendación */
+
+#recomendacion {
+    border-top: 5px solid #21a675;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(33, 166, 117, 0.06),
+            transparent 65%
+        ),
+        #ffffff;
+    animation-delay: 0.16s;
+}
+
+/* Títulos de las tarjetas */
+
+#caracteristicasHipoteca h2,
+#caracteristicasMonetarias h2,
+#recomendacion h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin: 0 0 22px;
+    padding-bottom: 15px;
+
+    color: var(--text);
+    font-size: clamp(1.25rem, 3vw, 1.55rem);
+    border-bottom: 1px solid var(--border);
+}
+
+#caracteristicasHipoteca h2::before,
+#caracteristicasMonetarias h2::before,
+#recomendacion h2::before {
+    content: "";
+    display: inline-block;
+    flex: 0 0 5px;
+
+    width: 5px;
+    height: 25px;
+
+    background: var(--primary);
+    border-radius: 5px;
+}
+
+#caracteristicasMonetarias h2::before {
+    background: #6675e8;
+}
+
+#recomendacion h2::before {
+    background: #21a675;
+}
+
+/* Información generada dentro de las tarjetas */
+
+#caracteristicasHipoteca p,
+#caracteristicasMonetarias p,
+#recomendacion p {
+    margin: 0 0 12px;
+    padding: 14px 16px;
+
+    color: #454d61;
+    font-size: 0.98rem;
+    line-height: 1.65;
+    overflow-wrap: anywhere;
+
+    background: #f7f8fc;
+    border: 1px solid #edf0f6;
+    border-radius: var(--radius-small);
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+#caracteristicasHipoteca p:last-child,
+#caracteristicasMonetarias p:last-child,
+#recomendacion p:last-child {
+    margin-bottom: 0;
+}
+
+#caracteristicasHipoteca p:hover,
+#caracteristicasMonetarias p:hover {
+    background: #ffffff;
+    border-color: #dfe4ef;
+}
+
+/* Destacar la recomendación */
+
+#recomendacion p {
+    color: #176847;
+    background: var(--success-light);
+    border-color: #ccefe0;
+}
+
+/* ---------- OCULTAR CONTENEDORES VACÍOS ---------- */
+
+#caracteristicasHipoteca:empty,
+#caracteristicasMonetarias:empty,
+#recomendacion:empty {
+    display: none;
+}
+
+/* ---------- BOTÓN VOLVER ---------- */
+
+body > button {
+    display: flex;
+    width: 100%;
+    max-width: 850px;
+    margin: 28px auto 10px;
+}
+
+/* ---------- ANIMACIONES ---------- */
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==========================================
+   DISEÑO PARA MÓVILES
+   ========================================== */
+
+@media (max-width: 600px) {
+    body {
+        padding: 22px 13px;
+        font-size: 15px;
+    }
+
+    form {
+        margin: 20px auto;
+        padding: 22px 17px;
+        gap: 9px;
+        border-radius: var(--radius-medium);
+    }
+
+    form:has(input[type="radio"]) {
+        grid-template-columns: 20px minmax(0, 1fr) 20px minmax(0, 1fr);
+        column-gap: 7px;
+        row-gap: 10px;
+    }
+
+    form p {
+        font-size: 0.9rem;
+    }
+
+    form input[type="number"],
+    form input[type="text"],
+    form input[type="email"],
+    form input[type="password"],
+    form input[type="tel"] {
+        min-height: 51px;
+        padding: 12px;
+        font-size: 0.94rem;
+    }
+
+    form input[type="radio"] {
+        width: 19px;
+        height: 19px;
+        min-width: 19px;
+    }
+
+    form input[type="radio"] + p {
+        min-height: 44px;
+        padding: 8px 7px;
+        font-size: 0.88rem;
+    }
+
+    form input[type="submit"],
+    button {
+        min-height: 51px;
+        padding: 13px 16px;
+        font-size: 0.95rem;
+    }
+
+    #caracteristicasHipoteca,
+    #caracteristicasMonetarias,
+    #recomendacion {
+        margin: 17px auto;
+        padding: 21px 16px;
+        border-radius: var(--radius-medium);
+    }
+
+    #caracteristicasHipoteca p,
+    #caracteristicasMonetarias p,
+    #recomendacion p {
+        padding: 12px;
+        font-size: 0.92rem;
+    }
+}
+
+/* Móviles muy estrechos */
+
+@media (max-width: 360px) {
+    body {
+        padding: 15px 9px;
+    }
+
+    form {
+        padding: 18px 12px;
+    }
+
+    form:has(input[type="radio"]) {
+        column-gap: 5px;
+    }
+
+    form input[type="radio"] + p {
+        padding: 7px 5px;
+        font-size: 0.82rem;
+    }
+}
+
+/* Respetar la preferencia de movimiento reducido */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+
+/* ---------- TÍTULO PRINCIPAL DE LA CALCULADORA ---------- */
+
+body > h1 {
+    width: 100%;
+    max-width: 850px;
+    margin: 0 auto 28px;
+    padding: 10px 12px;
+
+    color: #202638;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 850;
+    line-height: 1.15;
+    letter-spacing: -1.5px;
+    text-align: center;
+
+    overflow-wrap: anywhere;
+}
+
+/* Resaltar el título con un degradado rojo */
+
+body > h1 {
+    background: linear-gradient(
+        135deg,
+        #ff2a4b 0%,
+        #e51f3e 55%,
+        #a91436 100%
+    );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Línea decorativa debajo del título */
+
+body > h1::after {
+    content: "";
+    display: block;
+
+    width: 76px;
+    height: 5px;
+    margin: 18px auto 0;
+
+    background: linear-gradient(
+        90deg,
+        #ff2a4b,
+        #e51f3e
+    );
+
+    border-radius: 10px;
+}
+
+/* Ajustes para móviles */
+
+@media (max-width: 600px) {
+    body > h1 {
+        margin-bottom: 22px;
+        padding: 8px 4px;
+        font-size: clamp(1.8rem, 8vw, 2.4rem);
+        letter-spacing: -1px;
+    }
+
+    body > h1::after {
+        width: 60px;
+        height: 4px;
+        margin-top: 14px;
+    }
+}
+

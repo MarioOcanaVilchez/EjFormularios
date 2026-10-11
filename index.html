@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>Calculador de hipotecas</title>
+    <link rel='stylesheet' href='style.css'>
+</head>
+<body>
+    <h1>Calculador de hipotecas</h1>
+    <form method="get" action="calculador.html">
+        <p>Precio total del inmueble</p>
+        <input type="number" name="precio" placeholder="125000 €" required step="1">
+        <p>Años de hipoteca</p>
+        <input type="number" name="anios" placeholder="30" min="1" required step="1">
+        <p>Interes de la hipoteca</p>
+        <input type="number" name="interes" placeholder="3.25" min="0" required step="0.01">
+        <p>Tipo de interes</p>
+        <input type="radio" name="tipoInteres" value="fijo" checked> <p>fijo</p>
+        <input type="radio" name="tipoInteres" value="variable"> <p>Variable</p>
+        <p>Cantidad adelantada</p>
+        <input type="number" name="cantidadInicial" placeholder="25000 €" required step="1">
+        <p>Ingresos mensuales</p>
+        <input type="number" name="ingresosMensuales" placeholder="1500 € (Sirve para recomendarte)" step="1">
+        <input type="submit">
+    </form>
+</body>
+</html>
